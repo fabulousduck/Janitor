@@ -46,3 +46,5 @@ func main(){
 - [ ] Implement a readline
 - [ ] Implement folder sorting
 - [ ] Allow for clean/sort by file name
+- [ ] Error logging for config.janitor file
+- [ ] Automatically generate config.janitor file if it doesnt exist and on install
