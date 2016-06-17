@@ -9,7 +9,7 @@ A Cleaning tool for your files.
   
   It also makes use of a config.janitor file in which you can specify certain variables that Janitor can look at.
   
-## Availible config.janitor variables
+## Available config.janitor variables
   
   You can store any varibles you'd like in the config.Janitor file, but there are only a few that actually do something at the moment.
   
