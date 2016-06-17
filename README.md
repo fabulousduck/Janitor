@@ -1,4 +1,4 @@
-#Janitor
+#Janitor [![Build Status](https://travis-ci.org/fabulousduck/Janitor.svg?branch=master)](https://travis-ci.org/fabulousduck/Janitor)
 
 A Cleaning tool for your files.
 
