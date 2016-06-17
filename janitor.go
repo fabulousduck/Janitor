@@ -27,7 +27,6 @@ func NewJanitor() *janitor {
 		os.Exit(1)
 	}
 	mapped := FormatList(string(list))
-	fmt.Println(mapped)
 	return &janitor{
 		"none",
 		false,
@@ -77,7 +76,6 @@ func (janitor *janitor) CleanDir(dir string) bool {
 			ext := strings.Split(p.Ext(janitor.garbage_bag[i]), ".")[1]
 			sPath := strings.Join([]string{dir, "/"}, "")
 			nPath := strings.Join([]string{sPath, ext}, "")
-			//fmt.Println(strings.Replace(strings.Join([]string{val.value, janitor.garbage_bag[i]}, "\\"), "/", "\\", -1), strings.Join([]string{nPath, janitor.garbage_bag[i]}, "\\"))
 			err := os.Rename(strings.Join([]string{dir, janitor.garbage_bag[i]}, "/"), strings.Join([]string{nPath, janitor.garbage_bag[i]}, "/"))
 			if err != nil {
 				fmt.Println(err)
