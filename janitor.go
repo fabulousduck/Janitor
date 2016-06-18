@@ -21,6 +21,16 @@ type janitor struct {
 }
 
 func NewJanitor() *janitor {
+	file, er := os.Create("config.janitor")
+	if os.IsExist(er) {
+		er = nil
+	}
+	if er != nil {
+		//do nothing
+	}
+
+	defer file.Close()
+
 	list, err := ioutil.ReadFile("config.janitor")
 	if err != nil {
 		fmt.Println("Could not find config.janitor file")
@@ -65,9 +75,9 @@ func (janitor *janitor) CleanDir(dir string) bool {
 				err = nil
 			}
 			if err != nil {
-				fmt.Println("meep")
+				//do nothing
 			}
-			//fmt.Println("made : ", types)
+
 		}
 
 		//actually move the files
