@@ -33,7 +33,7 @@ A Cleaning tool for your directories.
 | Name | Example |
 | :--: | :-----: |
 | janitor\_ignore | `janitor_ignore={.txt,.png}` |
-| janitor\_desktopPath | `janitor_desktopPath=/Users/ryanvlaming/Desktop`|
+| janitor\_defaultDir | `janitor_desktopPath=/Users/ryanvlaming/Desktop`|
 
 
 ## functions
