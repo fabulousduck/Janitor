@@ -5,8 +5,6 @@ import (
 )
 
 func main() {
-	jan := janitor.NewJanitor()
-
-	jan.CleanDir("/Users/ryanvlaming/Desktop")
+	janitor.Repl()
 
 }

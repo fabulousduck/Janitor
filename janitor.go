@@ -18,18 +18,18 @@ type janitor struct {
 	busy         bool
 	garbage_bag  []string
 	list         map[string]listItem
+	cmdArgs      []string
 }
 
 func NewJanitor() *janitor {
-	file, er := os.Create("config.janitor")
-	if os.IsExist(er) {
-		er = nil
-	}
-	if er != nil {
-		//do nothing
-	}
+	if _, err := os.Stat("config.janitor"); err == nil {
 
-	defer file.Close()
+	} else {
+		fmt.Println("no config.janitor file found. making one for you.")
+		file, _ := os.Create("config.janitor")
+		defer file.Close()
+
+	}
 
 	list, err := ioutil.ReadFile("config.janitor")
 	if err != nil {
@@ -42,15 +42,20 @@ func NewJanitor() *janitor {
 		false,
 		[]string{},
 		mapped,
+		[]string{},
 	}
 }
 
-func (janitor *janitor) CleanDir(dir string) bool {
+func (janitor *janitor) CleanDir(args []string, usedef bool) bool {
+	if usedef {
 
-	janitor.findFiles(dir)
+		janitor.findFiles(janitor.list["janitor_defaultDir"].value)
+	} else {
+		janitor.findFiles(args[1])
+	}
 	fmt.Println("do you really want to clean up ", len(janitor.garbage_bag), " files ? [y/n]")
 
-	if userConfirm() {
+	if UserConfirm() {
 
 		types := []string{}
 
@@ -65,33 +70,60 @@ func (janitor *janitor) CleanDir(dir string) bool {
 		}
 
 		//makes the folders for the files by type.
+		if usedef {
+			for i := 0; i < len(types); i++ {
 
-		for i := 0; i < len(types); i++ {
+				fPath := strings.Join([]string{strings.Join([]string{janitor.list["janitor_defaultDir"].value, "/"}, ""), strings.Split(types[i], ".")[1]}, "")
+				err := os.Mkdir(fPath, 0700)
+				fmt.Println(fPath)
+				if os.IsExist(err) {
+					err = nil
+				}
+				if err != nil {
+					//do nothing
+				}
 
-			fPath := strings.Join([]string{strings.Join([]string{dir, "/"}, ""), strings.Split(types[i], ".")[1]}, "")
-			err := os.Mkdir(fPath, 0700)
-
-			if os.IsExist(err) {
-				err = nil
 			}
-			if err != nil {
-				//do nothing
-			}
 
+		} else {
+			for i := 0; i < len(types); i++ {
+
+				fPath := strings.Join([]string{strings.Join([]string{args[1], "/"}, ""), strings.Split(types[i], ".")[1]}, "")
+				err := os.Mkdir(fPath, 0700)
+				fmt.Println(fPath)
+				if os.IsExist(err) {
+					err = nil
+				}
+				if err != nil {
+					//do nothing
+				}
+
+			}
 		}
-
 		//actually move the files
-
-		for i := 0; i < len(janitor.garbage_bag); i++ {
-			ext := strings.Split(p.Ext(janitor.garbage_bag[i]), ".")[1]
-			sPath := strings.Join([]string{dir, "/"}, "")
-			nPath := strings.Join([]string{sPath, ext}, "")
-			err := os.Rename(strings.Join([]string{dir, janitor.garbage_bag[i]}, "/"), strings.Join([]string{nPath, janitor.garbage_bag[i]}, "/"))
-			if err != nil {
-				fmt.Println(err)
+		if usedef {
+			for i := 0; i < len(janitor.garbage_bag); i++ {
+				ext := strings.Split(p.Ext(janitor.garbage_bag[i]), ".")[1]
+				sPath := strings.Join([]string{janitor.list["janitor_defaultDir"].value, "/"}, "")
+				nPath := strings.Join([]string{sPath, ext}, "")
+				err := os.Rename(strings.Join([]string{janitor.list["janitor_defaultDir"].value, janitor.garbage_bag[i]}, "/"), strings.Join([]string{nPath, janitor.garbage_bag[i]}, "/"))
+				if err != nil {
+					fmt.Println(err)
+				}
 			}
-		}
 
+		} else {
+			for i := 0; i < len(janitor.garbage_bag); i++ {
+				ext := strings.Split(p.Ext(janitor.garbage_bag[i]), ".")[1]
+				sPath := strings.Join([]string{args[1], "/"}, "")
+				nPath := strings.Join([]string{sPath, ext}, "")
+				err := os.Rename(strings.Join([]string{args[1], janitor.garbage_bag[i]}, "/"), strings.Join([]string{nPath, janitor.garbage_bag[i]}, "/"))
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+
+		}
 	}
 
 	return true
@@ -100,8 +132,9 @@ func (janitor *janitor) CleanDir(dir string) bool {
 func (janitor *janitor) findFiles(target string) {
 	fs, err := ioutil.ReadDir(target)
 	if err != nil {
-		panic(err)
+		fmt.Println("invalid path : ", target)
 	}
+
 	for _, file := range fs {
 		fp := strings.Join([]string{target, file.Name()}, "")
 		if p.Ext(fp) != "" && !janitor.isIgnoring(p.Ext(fp)) && file.Name()[0] != '.' {
@@ -131,7 +164,7 @@ func sContains(slice []string, query string) bool {
 	return false
 }
 
-func userConfirm() bool {
+func UserConfirm() bool {
 	var resp int
 	fmt.Scanf("%c", &resp)
 	switch resp {
