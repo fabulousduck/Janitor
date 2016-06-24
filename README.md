@@ -43,6 +43,7 @@ func main(){
 
 ## future todo's
 
+- [x] Implement basic flags
 - [ ] Implement a readline
 - [ ] Implement folder sorting
 - [ ] Allow for clean/sort by file name
