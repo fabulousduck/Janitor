@@ -46,12 +46,12 @@ func NewJanitor() *janitor {
 	}
 }
 
-func (janitor *janitor) CleanDir(args []string, usedef bool) bool {
+func (janitor *janitor) CleanDir(args []string) bool {
+	usedef := FlagGiven("-defaultdir", args)
 	if usedef {
-
-		janitor.findFiles(janitor.list["janitor_defaultDir"].value)
+		janitor.findFiles(janitor.list["janitor_defaultDir"].value, args)
 	} else {
-		janitor.findFiles(args[1])
+		janitor.findFiles(args[1], args)
 	}
 	fmt.Println("do you really want to clean up ", len(janitor.garbage_bag), " files ? [y/n]")
 
@@ -129,7 +129,8 @@ func (janitor *janitor) CleanDir(args []string, usedef bool) bool {
 	return true
 }
 
-func (janitor *janitor) findFiles(target string) {
+func (janitor *janitor) findFiles(target string, args []string) {
+	noignore := FlagGiven("-noignore", args)
 	fs, err := ioutil.ReadDir(target)
 	if err != nil {
 		fmt.Println("invalid path : ", target)
@@ -137,15 +138,22 @@ func (janitor *janitor) findFiles(target string) {
 
 	for _, file := range fs {
 		fp := strings.Join([]string{target, file.Name()}, "")
-		if p.Ext(fp) != "" && !janitor.isIgnoring(p.Ext(fp)) && file.Name()[0] != '.' {
-			janitor.garbage_bag = append(janitor.garbage_bag, file.Name())
+		fmt.Println(janitor.list)
+		if noignore {
+			if p.Ext(fp) != "" && file.Name()[0] != '.' {
+				janitor.garbage_bag = append(janitor.garbage_bag, file.Name())
+			}
+		} else {
+			if p.Ext(fp) != "" && !janitor.isIgnoring(p.Ext(fp)) && file.Name()[0] != '.' {
+				janitor.garbage_bag = append(janitor.garbage_bag, file.Name())
+			}
 		}
 	}
 }
 
 func (janitor *janitor) isIgnoring(ftype string) bool {
 	if val, ok := janitor.list["janitor_ignore"]; ok {
-		for i := 0; i < len(val.values)-1; i++ {
+		for i := 0; i < len(val.values); i++ {
 			if val.values[i] == ftype {
 				return true
 			}

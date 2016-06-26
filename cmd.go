@@ -20,7 +20,7 @@ type command struct {
 }
 
 var commands = map[string]command{
-	"clean":   {[]string{"-noignore", "-defaultdir", "-desktop"}, false, false},
+	"clean":   {[]string{"-noignore", "-defaultdir"}, false, false},
 	"install": {[]string{"-dtemplate"}, false, false},
 }
 
@@ -54,11 +54,10 @@ func (j *janitor) handleArgs(rli string) {
 			switch args[0] {
 
 			case "clean":
-				if flagGiven("-defaultDir", args) {
-					j.CleanDir(args, true)
-				} else {
-					j.CleanDir(args, false)
-				}
+				j.CleanDir(args)
+
+			case "install":
+
 			}
 		}
 	} else {
@@ -66,7 +65,7 @@ func (j *janitor) handleArgs(rli string) {
 	}
 }
 
-func flagGiven(flag string, args []string) bool {
+func FlagGiven(flag string, args []string) bool {
 	for i := 0; i < len(args); i++ {
 		if args[i] == flag {
 			return true
