@@ -37,21 +37,7 @@ A Cleaning tool for your directories.
 | janitor\_defaultDir | `janitor_desktopPath=/Users/ryanvlaming/Desktop`|
 
 
-## functions
 
-  At the moment Janitor only has a cleaning function for putting stray files into folders.
-  
-  The path to the directory must be specified fully from root. ( `/Users/ryanvlaming/whereever` )
-### example 
-
-```go
-func main(){
-  var myJanitor = janitor.NewJanitor();
-    
-   myJanitor.CleanDir("DirectoryToBeCleaned");
-    
-  }
-```
 
 ## future todo's
 
