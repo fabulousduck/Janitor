@@ -18,7 +18,8 @@ A Cleaning tool for your directories.
 | Flag | function |Currently usable |
 | :--: | :------: | :-------------: |
 | -defaultDir | uses the user predefined default directory to clean | yes |
-| -noIgnore   | sort the user predefined ignored file types         | no  |
+| -noIgnore   | sort the user predefined ignored file types         | yes |
+
 
 ## Available config.janitor variables
   
@@ -55,7 +56,7 @@ func main(){
 ## future todo's
 
 - [x] Implement basic flags
-- [ ] Implement a readline
+- [x] Implement a readline
 - [ ] Implement folder sorting
 - [ ] Allow for clean/sort by file name
 - [ ] Error logging for config.janitor file
