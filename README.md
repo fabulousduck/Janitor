@@ -11,7 +11,7 @@ A Cleaning tool for your directories.
   
   You can also use flags with the commands now. the ones currently availible are listed below
   
-## Availible flags
+## Availible flags/commands
 
 ### Clean
   
@@ -19,7 +19,14 @@ A Cleaning tool for your directories.
 | :--: | :------: | :-------------: |
 | -defaultDir | uses the user predefined default directory to clean | yes |
 | -noIgnore   | sort the user predefined ignored file types         | yes |
+| revert      | reverts the last cleanup                            | no  |
 
+### install
+
+| Flag | function |Currently usable |
+| :--: | :------: | :-------------: |
+| -preconfig | install janitor with  base config.janitor variables | no |
+| -noconfig  | install without the config.janitor files (not recommended) | no |
 
 ## Available config.janitor variables
   
@@ -31,10 +38,11 @@ A Cleaning tool for your directories.
   
 ### variables
   
-| Name | Example |
-| :--: | :-----: |
-| janitor\_ignore | `janitor_ignore={.txt,.png}` |
-| janitor\_defaultDir | `janitor_desktopPath=/Users/ryanvlaming/Desktop`|
+| Name | Example | Available| 
+| :--: | :-----: | :------: |
+| janitor\_ignore | `janitor_ignore={.txt,.png}` | yes |
+| janitor\_defaultDir | `janitor_desktopPath=/Users/ryanvlaming/Desktop` | yes |
+| janitor\_defaultDump | `janitor_defaultDump=/Users/ryanvlaming/Desktop/dump` | no |
 
 
 
