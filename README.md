@@ -11,14 +11,22 @@ A Cleaning tool for your directories.
   
   You can also use flags with the commands now. the ones currently availible are listed below
   
-## Availible flags
+## Availible flags/commands
 
 ### Clean
   
 | Flag | function |Currently usable |
 | :--: | :------: | :-------------: |
 | -defaultDir | uses the user predefined default directory to clean | yes |
-| -noIgnore   | sort the user predefined ignored file types         | no  |
+| -noIgnore   | sort the user predefined ignored file types         | yes |
+| revert      | reverts the last cleanup                            | no  |
+
+### install
+
+| Flag | function |Currently usable |
+| :--: | :------: | :-------------: |
+| -preconfig | install janitor with  base config.janitor variables | no |
+| -noconfig  | install without the config.janitor files (not recommended) | no |
 
 ## Available config.janitor variables
   
@@ -30,32 +38,19 @@ A Cleaning tool for your directories.
   
 ### variables
   
-| Name | Example |
-| :--: | :-----: |
-| janitor\_ignore | `janitor_ignore={.txt,.png}` |
-| janitor\_defaultDir | `janitor_desktopPath=/Users/ryanvlaming/Desktop`|
+| Name | Example | Available| 
+| :--: | :-----: | :------: |
+| janitor\_ignore | `janitor_ignore={.txt,.png}` | yes |
+| janitor\_defaultDir | `janitor_desktopPath=/Users/ryanvlaming/Desktop` | yes |
+| janitor\_defaultDump | `janitor_defaultDump=/Users/ryanvlaming/Desktop/dump` | no |
 
 
-## functions
 
-  At the moment Janitor only has a cleaning function for putting stray files into folders.
-  
-  The path to the directory must be specified fully from root. ( `/Users/ryanvlaming/whereever` )
-### example 
-
-```go
-func main(){
-  var myJanitor = janitor.NewJanitor();
-    
-   myJanitor.CleanDir("DirectoryToBeCleaned");
-    
-  }
-```
 
 ## future todo's
 
 - [x] Implement basic flags
-- [ ] Implement a readline
+- [x] Implement a readline
 - [ ] Implement folder sorting
 - [ ] Allow for clean/sort by file name
 - [ ] Error logging for config.janitor file
