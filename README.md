@@ -11,7 +11,7 @@ A Cleaning tool for your directories.
   
   You can also use flags with the commands now. the ones currently availible are listed below
   
-## Availible flags/commands
+## Available flags/commands
 
 ### Clean
   
