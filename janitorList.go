@@ -20,11 +20,9 @@ func FormatList(list string) map[string]listItem {
 			rMap[string(var_name)] = listItem{"", ul(var_value)}
 
 		} else {
-			//fmt.Println(mapAddition[1])
 			rMap[string(var_name)] = listItem{var_value, []string{}}
 		}
 	}
-	//fmt.Println(rMap)
 	return rMap
 }
 

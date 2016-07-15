@@ -10,6 +10,7 @@ package janitor
 import (
 	"fmt"
 	"gopkg.in/readline.v1"
+	"os"
 	"strings"
 )
 
@@ -20,8 +21,9 @@ type command struct {
 }
 
 var commands = map[string]command{
-	"clean":   {[]string{"-noignore", "-defaultdir"}, false, false},
+	"clean":   {[]string{"-noignore", "-defaultdir", "revertlast"}, false, false},
 	"install": {[]string{"-dtemplate"}, false, false},
+	"quit":    {[]string{}, false, false},
 }
 
 func Repl() {
@@ -58,6 +60,8 @@ func (j *janitor) handleArgs(rli string) {
 
 			case "install":
 
+			case "quit":
+				os.Exit(1)
 			}
 		}
 	} else {
