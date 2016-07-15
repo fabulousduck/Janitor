@@ -17,7 +17,7 @@ A Cleaning tool for your directories.
   
 | Flag | function |Currently usable |
 | :--: | :------: | :-------------: |
-| -defaultDir | uses the user predefined default directory to clean | yes |
+| -defaultdir | uses the user predefined default directory to clean | yes |
 | -noIgnore   | sort the user predefined ignored file types         | yes |
 | revert      | reverts the last cleanup                            | no  |
 
