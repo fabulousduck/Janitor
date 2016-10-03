@@ -47,7 +47,6 @@ func (janitor *janitor) CleanDir(args []string) bool {
 				if err != nil {
 					//do nothing
 				}
-
 			}
 
 		} else {
